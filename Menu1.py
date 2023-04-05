@@ -1,5 +1,6 @@
 from tkinter import *
 from xml.dom import minidom
+from lista_simple import listaSimple
 from elementos import Elementos
 from maquinas import Maquinas
 from compuestos import Compuesto
@@ -57,17 +58,43 @@ class Mi_ventan(Frame):
 
     def porcesoInfo(self,archXML):
         #listado de maquinas
-        nom=archXML.getElementsByTagName('nombre')
-        pines=archXML.getElementsByTagName('numeroPines')
-        elemen=archXML.getElementsByTagName('numeroElementos')
+        self.listado_elementos=listaSimple()
+        self.listado_maquinas=listaSimple()
+        self.listado_compuesto=listaSimple()
 
-        nom_maquina= nom[0].childNodes[0].data
-        num_pines= pines[0].childNodes[0].data
-        num_elementos=elemen[0].childNodes[0].data
 
-        nuevaMaquina = Maquinas(nom_maquina,num_pines,num_elementos)
+        lis=[]
+                #lsitado de compuestos
+        compuesto=archXML.getElementsByTagName('compuesto')
+
+        for comp in compuesto:
+            nom_compuesto= comp.childNodes[1].firstChild.data
+            compuesto_1=Compuesto(nom_compuesto)
+
+        el_compuesto=compuesto[0].getElementsByTagName('elementos')
+        elememen1=el_compuesto[0].getElementsByTagName('elemento')
+        for h in range(len(elememen1)):
+            elemen2=elememen1[h].childNodes[0].data
+            self.listado_compuesto.insertar(elemen2)
+            print(elemen2)
 
         
+
+        
+
+
+        pines=archXML.getElementsByTagName('pin')
+        
+
+        for j in range(len(pines)):
+
+            elementos=pines[j].getElementsByTagName('elementos')
+            elemento1=elementos[0].getElementsByTagName('elemento')
+
+            for i in range(len(elemento1)):
+                elemento2=elemento1[i].childNodes[0].data
+                self.listado_maquinas.insertar(elemento2)
+  
 
         #listado de elementos
         elementosXML=archXML.getElementsByTagName('elemento')
@@ -76,21 +103,12 @@ class Mi_ventan(Frame):
             numero=elementos.childNodes[1].firstChild.data
             simbolo=elementos.childNodes[3].firstChild.data
             nombre=elementos.childNodes[5].firstChild.data
+            
 
             nuevoElemento=Elementos(numero,simbolo,nombre)
-   
-            nuevoElemento.listaElementos.insertar(nuevoElemento)
-
-        #lsitado de compuestos
-        compuesto=archXML.getElementsByTagName('nombre')
-        nom_compuesto= compuesto[0].childNodes[0].data
-
-        nuevo_compuesto=Compuesto(nom_compuesto)
-
-
-
             
-        
+            self.listado_elementos.insertar(nuevoElemento)
+
 root=Tk()
 app=Mi_ventan(root)
 app.mainloop()

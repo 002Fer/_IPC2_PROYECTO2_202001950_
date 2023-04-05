@@ -47,3 +47,41 @@ print()
 """mostrar los contenidos de los nodos """
 for recorrer in numero.recorrer():
     print(recorrer)
+
+'''
+        nom=archXML.getElementsByTagName('nombre')
+        pines=archXML.getElementsByTagName('numeroPines')
+        elemen=archXML.getElementsByTagName('numeroElementos')
+
+        nom_maquina= nom[0].childNodes[0].data
+        num_pines= pines[0].childNodes[0].data
+        num_elementos=elemen[0].childNodes[0].data
+
+        self.nuevaMaquina = Maquinas(nom_maquina,num_pines,num_elementos)
+
+        pin_maquina=archXML.getElementsByTagName('pin')
+        for pi in pin_maquina:
+            
+
+ 
+
+        #listado de elementos
+        elementosXML=archXML.getElementsByTagName('elemento')
+       
+        for elementos in elementosXML:
+            numero=elementos.childNodes[1].firstChild.data
+            simbolo=elementos.childNodes[3].firstChild.data
+            nombre=elementos.childNodes[5].firstChild.data
+            
+
+            nuevoElemento=Elementos(numero,simbolo,nombre)
+            
+            self.listado_elementos.insertar(nuevoElemento)
+            
+
+        #lsitado de compuestos
+        compuesto=archXML.getElementsByTagName('nombre')
+        nom_compuesto= compuesto[0].childNodes[0].data
+
+        nuevo_compuesto=Compuesto(nom_compuesto)
+'''
