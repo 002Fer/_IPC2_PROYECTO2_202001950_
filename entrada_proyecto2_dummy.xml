@@ -11,7 +11,7 @@
       <elemento>
          <numeroAtomico>1</numeroAtomico>
          <simbolo>H</simbolo>
-         <nombreElemento>Hidrógeno</nombreElemento>
+         <nombreElemento>Hidrogeno</nombreElemento>
       </elemento>
 
       <elemento>
@@ -38,22 +38,22 @@
       <elemento>
          <numeroAtomico>7</numeroAtomico>
          <simbolo>N</simbolo>
-         <nombreElemento>Nitrógeno</nombreElemento>
+         <nombreElemento>Nitrogeno</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>8</numeroAtomico>
          <simbolo>O</simbolo>
-         <nombreElemento>Oxígeno</nombreElemento>
+         <nombreElemento>Oxigeno</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>9</numeroAtomico>
          <simbolo>F</simbolo>
-         <nombreElemento>Flúor</nombreElemento>
+         <nombreElemento>Fluor</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>10</numeroAtomico>
          <simbolo>Ne</simbolo>
-         <nombreElemento>Neón</nombreElemento>
+         <nombreElemento>Neon</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>11</numeroAtomico>
@@ -78,7 +78,7 @@
       <elemento>
          <numeroAtomico>15</numeroAtomico>
          <simbolo>P</simbolo>
-         <nombreElemento>Fósforo</nombreElemento>
+         <nombreElemento>Fosforo</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>16</numeroAtomico>
@@ -93,7 +93,7 @@
       <elemento>
          <numeroAtomico>18</numeroAtomico>
          <simbolo>Ar</simbolo>
-         <nombreElemento>Argón</nombreElemento>
+         <nombreElemento>Argon</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>19</numeroAtomico>
@@ -143,7 +143,7 @@
       <elemento>
          <numeroAtomico>28</numeroAtomico>
          <simbolo>Ni</simbolo>
-         <nombreElemento>Níquel</nombreElemento>
+         <nombreElemento>Niquel</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>29</numeroAtomico>
@@ -168,7 +168,7 @@
       <elemento>
          <numeroAtomico>33</numeroAtomico>
          <simbolo>As</simbolo>
-         <nombreElemento>Arsénico</nombreElemento>
+         <nombreElemento>Arsenico</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>34</numeroAtomico>
@@ -183,7 +183,7 @@
       <elemento>
          <numeroAtomico>36</numeroAtomico>
          <simbolo>Kr</simbolo>
-         <nombreElemento>Kriptón</nombreElemento>
+         <nombreElemento>Kripton</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>37</numeroAtomico>
@@ -273,7 +273,7 @@
       <elemento>
          <numeroAtomico>54</numeroAtomico>
          <simbolo>Xe</simbolo>
-         <nombreElemento>Xenón</nombreElemento>
+         <nombreElemento>Xenon</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>55</numeroAtomico>
@@ -433,7 +433,7 @@
       <elemento>
          <numeroAtomico>86</numeroAtomico>
          <simbolo>Rn</simbolo>
-         <nombreElemento>Radón</nombreElemento>
+         <nombreElemento>Radon</nombreElemento>
       </elemento>
       <elemento>
          <numeroAtomico>87</numeroAtomico>
