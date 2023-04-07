@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
+import tkinter.messagebox
 from xml.dom import minidom
 from lista_simple import listaSimple
 from elementos import Elementos
@@ -37,8 +37,8 @@ class Mi_ventan(Frame):
         a="Generar Salida"     
         self.boton_salida=Button(self, text=a,bg='#BDBDBD' )
         self.boton_elementos=Button(self,text='Gestion de elementos',bg='#BDBDBD', command=self.mostrar_elementos )
-        self.boton_compuestos=Button(self,text='Gestion de compuestos',bg='#BDBDBD' )
-        self.boton_salir=Button(self,text='Salir',bg='#BDBDBD' , command=self.quit)
+        self.boton_compuestos=Button(self,text='Gestion de compuestos',bg='#BDBDBD', command=self.mostrar_compuestos )
+        self.boton_salir=Button(self,text='Salir',bg='red' , command=self.quit)
 
         self.boton_maquinas=Button(self, text='Gestion de máquinas',bg='#BDBDBD',command=self.mostrar_maquinas )
         self.boton_ayuda=Button(self,text='Ayuda',bg='#BDBDBD',command=self.datos  )
@@ -57,8 +57,9 @@ class Mi_ventan(Frame):
     def buscar_archivo(self):
         ventana=askopenfile(title="seleccione el archivo")
         archXML=minidom.parse(ventana)
+        tkinter.messagebox.showinfo("Archivo","Se cargo el archivo")
         self.porcesoInfo(archXML)
-
+        tkinter.messagebox.showinfo("Archivo","Se cargo el archivo")
     def porcesoInfo(self,archXML):
         #listado de maquinas
         self.listado_elementos=listaSimple()
@@ -71,14 +72,17 @@ class Mi_ventan(Frame):
         compuesto=archXML.getElementsByTagName('compuesto')
 
         for comp in compuesto:
-            nom_compuesto= comp.childNodes[1].firstChild.data
-            compuesto_1=Compuesto(nom_compuesto)
+            self.nom_compuesto= comp.childNodes[1].firstChild.data
+            compuesto_1=Compuesto(self.nom_compuesto)
 
         el_compuesto=compuesto[0].getElementsByTagName('elementos')
         elememen1=el_compuesto[0].getElementsByTagName('elemento')
         for h in range(len(elememen1)):
             elemen2=elememen1[h].childNodes[0].data
+
             self.listado_compuesto.insertar(elemen2)
+        
+        
 
          #----------/////////////////-----------listado de maquinas------///////////-------
         self.maquinasXML=archXML.getElementsByTagName('Maquina')
@@ -91,6 +95,9 @@ class Mi_ventan(Frame):
             self.simbolo2=pines_.firstChild.data
             self.nombre2=tamaño.firstChild.data
 
+            nueva_maquina=Maquinas(self.numero2,self.simbolo2,self.nombre2)
+
+        #guardado de pines
         pines=archXML.getElementsByTagName('pin')
         
 
@@ -117,9 +124,11 @@ class Mi_ventan(Frame):
             nombre1=nombre.firstChild.data
             
 
-            nuevoElemento=Elementos(numero1,simbolo1,nombre1)
+            self.nuevoElemento=Elementos(numero1,simbolo1,nombre1)
             
-            self.listado_elementos.insertar(nuevoElemento)
+            self.listado_elementos.insertar(self.nuevoElemento)
+
+     
 
 
 #--------////////////-----ventana para mostrar los elementos //////////////////////----
@@ -145,23 +154,22 @@ class Mi_ventan(Frame):
         tv.column('col1', width=100)
         tv.column('col2', width=100)
 
-        tv.heading('#0',text='numero atomico', anchor=CENTER)
-        tv.heading('col1',text='SIMBOLO', anchor=CENTER)
-        tv.heading('col2',text='NOMBRE', anchor=CENTER)
+        tv.heading('#0',text='Numero atomico', anchor=CENTER)
+        tv.heading('col1',text='Simbolo', anchor=CENTER)
+        tv.heading('col2',text='Nombre', anchor=CENTER)
 
-        while self.elementosXML!=None:
-            for elementos in self.elementosXML:
-                numero=elementos.getElementsByTagName('numeroAtomico')[0]
-                simbolo=elementos.getElementsByTagName('simbolo')[0]
-                nombre=elementos.getElementsByTagName('nombreElemento')[0]
+        lista1=self.listado_elementos
+        nodo_actual=lista1.cabeza
 
-                numero1=numero.firstChild.data
-                simbolo1=simbolo.firstChild.data
-                nombre1=nombre.firstChild.data
-                tv.insert("",END,text=numero1,values=(simbolo1,nombre1))
+        while nodo_actual !=None:
+            celda_elemento:Elementos=nodo_actual.datos
+            if celda_elemento!=None:
+                a=celda_elemento.numAtomico
+                b=celda_elemento.simbolo
+                c=celda_elemento.nombre
+                tv.insert("",END,text=a,values=(b,c))
                 tv.place(x=10,y=10)
-
-
+            nodo_actual=nodo_actual.siguiente
 
 #--------////////////-----ventana para mostrar maquinas //////////////////////----
 
@@ -170,6 +178,9 @@ class Mi_ventan(Frame):
         ventana4.title("tabla de elementos")
         ventana4.geometry("500x250")
         ventana4.config(bg='#04B45F')
+
+        boton_regresar=Button(ventana4,bg='red', text="Regresar",command=ventana4.destroy)
+        boton_regresar.place(x=380,y=150,width=100,height=30)
         
         tv2=ttk.Treeview(ventana4,columns=("col1","col2"))
 
@@ -219,9 +230,68 @@ class Mi_ventan(Frame):
         nuevo_numero=self.numero.get()
         nuevo_simbolo=self.simbolo.get()
         nuevo_elemento=self.elemento.get()
-        self.listado_elementos.insertar(nuevo_numero,nuevo_simbolo,nuevo_elemento)
 
-        messagebox.showinfo("Se guardado el nuevo elemento")
+        
+
+        lista2=self.listado_elementos
+        nodo_actual=lista2.cabeza
+
+        while nodo_actual !=None:
+            celda_elemento:Elementos=nodo_actual.datos
+            if celda_elemento.numAtomico==nuevo_numero or celda_elemento.simbolo==nuevo_simbolo or celda_elemento.nombre==nuevo_elemento:
+                tkinter.messagebox.showinfo("Guardado","Error, elemento repetido")
+                break
+            else:                
+                guardar=Elementos(nuevo_numero,nuevo_simbolo,nuevo_elemento)
+                self.listado_elementos.insertar(guardar)
+
+                tkinter.messagebox.showinfo("Guardado","Se guardado el nuevo elemento")
+                break
+
+#-----------------//////////---ventana compuesto /////////////////----------------------
+    def mostrar_compuestos(self):
+        ventana3=Toplevel()
+        ventana3.title("tabla de elementos")
+        ventana3.geometry("600x250")
+        ventana3.config(bg='#04B45F')
+
+        botonN_elemento=Button(ventana3,text="Analizar")
+        botonN_elemento.place (x=450,y=100,width=100,height=30)
+      
+
+        boton_regresar=Button(ventana3,bg='red', text="Regresar",command=ventana3.destroy)
+        boton_regresar.place(x=450,y=150,width=100,height=30)
+     
+
+        
+        tv3=ttk.Treeview(ventana3,columns=("col1"))
+
+        tv3.column('#0', width=150)
+        tv3.column('col1', width=100)
+
+
+        tv3.heading('#0',text='Nombre Compuesto', anchor=CENTER)
+        tv3.heading('col1',text='Elementos', anchor=CENTER)
+
+        a=self.nom_compuesto
+  
+        tv3.insert("",END,text=a)
+
+        lista2=self.listado_compuesto
+        nodo_actual=lista2.cabeza
+
+        while nodo_actual !=None:
+
+            tv3.insert("",END,values=(nodo_actual.datos))
+            tv3.place(x=10,y=10)
+            nodo_actual=nodo_actual.siguiente
+            
+
+
+    def crear_grafica(self):
+        
+        pass
+        
 
         
 
