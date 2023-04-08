@@ -59,12 +59,13 @@ class Mi_ventan(Frame):
         archXML=minidom.parse(ventana)
         tkinter.messagebox.showinfo("Archivo","Se cargo el archivo")
         self.porcesoInfo(archXML)
-        tkinter.messagebox.showinfo("Archivo","Se cargo el archivo")
+        
     def porcesoInfo(self,archXML):
         #listado de maquinas
         self.listado_elementos=listaSimple()
         self.listado_maquinas=listaSimple()
         self.listado_compuesto=listaSimple()
+        self.listadoPin_maquinas=listaSimple()
 
 
         
@@ -96,6 +97,8 @@ class Mi_ventan(Frame):
             self.nombre2=tamaño.firstChild.data
 
             nueva_maquina=Maquinas(self.numero2,self.simbolo2,self.nombre2)
+            self.listado_maquinas.insertar(nueva_maquina)
+
 
         #guardado de pines
         pines=archXML.getElementsByTagName('pin')
@@ -108,7 +111,7 @@ class Mi_ventan(Frame):
 
             for i in range(len(elemento1)):
                 elemento2=elemento1[i].childNodes[0].data
-                self.listado_maquinas.insertar(elemento2)
+                self.listadoPin_maquinas.insertar(elemento2)
   
 
         #-----------///////////------listado de elementos---------//////////------------
@@ -192,9 +195,20 @@ class Mi_ventan(Frame):
         tv2.heading('col1',text='Numero', anchor=CENTER)
         tv2.heading('col2',text='elementos', anchor=CENTER)
 
+        lista1=self.listado_maquinas
+        nodo_actual=lista1.cabeza
 
-        tv2.insert("",END,text=self.numero2,values=(self.simbolo2,self.nombre2))
-        tv2.pack()
+        while nodo_actual !=None:
+            celda_elemento:Maquinas=nodo_actual.datos
+            if celda_elemento!=None:
+                a=celda_elemento.nombre
+                b=celda_elemento.num_pines
+                c=celda_elemento.num_elementos
+                tv2.insert("",END,text=a,values=(b,c))
+                tv2.place(x=10,y=10)
+            nodo_actual=nodo_actual.siguiente
+
+
     
         #--------////////////-----ventana para insetar nuevo elemento //////////////////////----
     def nuevo_elemento(self):
@@ -261,6 +275,7 @@ class Mi_ventan(Frame):
 
         boton_regresar=Button(ventana3,bg='red', text="Regresar",command=ventana3.destroy)
         boton_regresar.place(x=450,y=150,width=100,height=30)
+
      
 
         
@@ -275,25 +290,51 @@ class Mi_ventan(Frame):
 
         a=self.nom_compuesto
   
-        tv3.insert("",END,text=a)
 
         lista2=self.listado_compuesto
         nodo_actual=lista2.cabeza
 
         while nodo_actual !=None:
-
-            tv3.insert("",END,values=(nodo_actual.datos))
+            aaa=nodo_actual.datos
+            
+            nodo_actual=nodo_actual.siguiente
+            tv3.insert("",END,text=a,values=(aaa))
             tv3.place(x=10,y=10)
+
+
+    def ordenar(self):
+        lista_1=listaSimple()
+        lista_2=listaSimple()
+        lista_3=listaSimple()
+
+        list=self.listado_elementos
+        nodo_actual=list.cabeza
+
+        while nodo_actual !=None:
+            celda_elemento:Elementos=nodo_actual.datos
+            if celda_elemento!=None:
+                a=celda_elemento.numAtomico
+                lista_1.insertar(a)
             nodo_actual=nodo_actual.siguiente
             
 
+    def graficar(self):
+        nodoAux = self.raiz
+        
+        cadena = 'digraph { '  
+        while True:
+            if nodoAux.nombre is not None:
+                cadena += nodoAux.nombre.replace(' ', '')
+                
+            else:
+                break
+        
+        cadena += "}"
+        file = open("./nodo.dot", "w+")
+        file.write(cadena)
+        file.close()
+        os.system('dot -Tpng nodo.dot -o nodo.png')
 
-    def crear_grafica(self):
-        
-        pass
-        
-
-        
 
 root=Tk()
 app=Mi_ventan(root)
